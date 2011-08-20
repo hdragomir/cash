@@ -105,9 +105,9 @@
     is(loaded.spendings[0].amount === spent, "Spendings not saved properly");
     is(loaded.ins !== undefined && loaded.ins.length === 1, "Cash not saving ins");
     
-    
+    cash.reset();
     is('function' === typeof cash.load, "Cash has no load function");
-    
+    is(cash === cash.load(), "Load is not chainable");
 
     
 }());

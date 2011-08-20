@@ -81,22 +81,16 @@ window.log = function(){
     };
     
     cash.months = function(){
-        var spending = this.spendings.reduce(function(prev, cur){
+        var reducingFunction = function(prev, cur){
                 if( ! prev[cur.key]){
                     prev[cur.key] = [cur];
                 } else {
                     prev[cur.key].push(cur);
                 }
                 return prev;
-            }, {}),
-            earnings = this.ins.reduce(function(prev, cur){
-                if( ! prev[cur.key]){
-                    prev[cur.key] = [cur];
-                } else {
-                    prev[cur.key].push(cur);
-                }
-                return prev;
-            }, {}),
+            },
+            spending = this.spendings.reduce(reducingFunction, {}),
+            earnings = this.ins.reduce(reducingFunction, {}),
             combined = {};
         Object.keys(spending).forEach(function(month){
             combined[month] = {"spendings": spending[month]};
@@ -123,7 +117,7 @@ window.log = function(){
     };
     
     cash.load = function(){
-          
+        return this;  
     };
     
     cash.leadingZero = leadingZero;
