@@ -62,7 +62,7 @@ window.log = function(){
     };
     
     cash.month = function(key){
-        return {
+        var month = {
             spendings: this.spendings.filter(function(spent){
                 return spent.key === key;
             }),
@@ -70,6 +70,14 @@ window.log = function(){
                 return earned.key === key;
             })
         };
+        month.spent = month.spendings.reduce(function(prev, spent){
+            return prev + spent.amount;
+        }, 0);
+        month.earned = month.ins.reduce(function(prev, earned){
+            return prev + earned.amount;
+        }, 0);
+        month.ballance = month.earned - month.spent;
+        return month;
     };
     
     
