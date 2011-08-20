@@ -65,6 +65,11 @@
     
     is(monthAggregate.ballance === earned - spent, "Month ballance is not correct");
     
+    cash.reset();
+    var month = Math.floor(Math.random() * 12) + 1;
+    cash.spend({amount: 1, date: new Date('2011-' + cash.leadingZero(month) + '-01')});
+    is(cash.spendings[0].key === "2011" + cash.leadingZero(month), "Date is not properly reflected in key");
+    
     
     
 }());

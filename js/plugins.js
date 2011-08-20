@@ -55,7 +55,7 @@ window.log = function(){
     };
     
     cash._prepare = function(config){
-        var now = new Date();
+        var now = config.date instanceof Date ? config.date : new Date();
         config = extend({date: now.getTime(), amount: 0, comment: ""}, config);
         config.key = now.getFullYear().toString() + leadingZero( now.getMonth() + 1 );
         return config;
@@ -79,6 +79,8 @@ window.log = function(){
         month.ballance = month.earned - month.spent;
         return month;
     };
+    
+    cash.leadingZero = leadingZero;
     
     
 
