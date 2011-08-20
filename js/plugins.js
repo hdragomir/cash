@@ -57,9 +57,10 @@ window.log = function(){
     cash._prepare = function(config){
         var now = new Date();
         config = extend({date: now.getTime(), amount: 0, comment: ""}, config);
-        config.key = now.getFullYear().toString() + leadingZero( now.getMonth() );
+        config.key = now.getFullYear().toString() + leadingZero( now.getMonth() + 1 );
         return config;
     };
+    
     
 
     window.cash = cash;
@@ -76,8 +77,13 @@ window.log = function(){
     cash.reset = function(){this.spendings = []; this.ins = []; this.ballance = 0;};
     
     var is = function(assert, onfailMessage){
-        console.log(assert? '.' : onfailMessage);
+        if(assert)
+            console.log('.');
+        else
+            throw onfailMessage;
     };
+    
+    var month = '201108';
     
     cash.ballance = 10;
     cash.spend({amount: 5});
@@ -89,6 +95,10 @@ window.log = function(){
     cash.spend({amount: 5});
     cash.reset();
     is(cash.spendings.length === 0, "Reset not working on spendings");
+    
+    var mockSpend = cash._prepare({amount: 5});
+    is(mockSpend.key === month, "Key not being calculated right");
+    
     
     
     
