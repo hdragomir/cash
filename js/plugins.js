@@ -80,6 +80,35 @@ window.log = function(){
         return month;
     };
     
+    cash.months = function(){
+        var spending = this.spendings.reduce(function(prev, cur){
+                if( ! prev[cur.key]){
+                    prev[cur.key] = [cur];
+                } else {
+                    prev[cur.key].push(cur);
+                }
+                return prev;
+            }, {}),
+            earnings = this.ins.reduce(function(prev, cur){
+                if( ! prev[cur.key]){
+                    prev[cur.key] = [cur];
+                } else {
+                    prev[cur.key].push(cur);
+                }
+                return prev;
+            }, {}),
+            combined = {};
+        Object.keys(spending).forEach(function(month){
+            combined[month] = {"spenings": spending[month]};
+        });
+        Object.keys(earnings).forEach(function(month){
+            combined[month]||(combined[month] = {});
+            combined[month].earnings = earnings[month];
+            
+        });
+        return combined;
+    };
+    
     cash.leadingZero = leadingZero;
     
     

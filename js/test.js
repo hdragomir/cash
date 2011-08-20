@@ -70,6 +70,8 @@
     cash.spend({amount: 1, date: new Date('2011-' + cash.leadingZero(month) + '-01')});
     is(cash.spendings[0].key === "2011" + cash.leadingZero(month), "Date is not properly reflected in key");
     
+    var months = cash.months
+    is(months != undefined, "Months api not working");
     
     
 }());
