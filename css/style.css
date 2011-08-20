@@ -211,7 +211,44 @@ td { vertical-align: top; }
    Author: Horia Dragomir <horia@hdragomir.com>
    ========================================================================== */
 
-
+header{
+    width: 95%;
+    margin: 0 2.5%;
+}
+    header h1{
+        margin: 0 0 1em 0;
+    }
+    
+        form input{
+            border-radius: 3%;
+            border: 1px solid #aaa;
+            width: 91.9%;
+            font-size: 1.3em;
+            padding: 1.5% 2.5%;
+            margin-bottom: .78em;
+        }
+        
+        form input[type=date], form input[type=number]{
+            width: 45%; display: inline-block; float: left;
+        }
+        
+        form input[type=date]{
+            margin-top: .2em;
+        }
+        
+        form input:invalid{background: white;}
+        
+        form input[name=amount]{
+            font-size: 1.7em;
+        }
+        
+        form input[type=submit]{
+            width: 80%;
+            display: block;
+            margin: 1em auto;
+            font-size: 1.7em;
+            
+        }
 
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.
