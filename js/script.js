@@ -39,8 +39,6 @@ document.addEventListener('DOMContentLoaded', function(){
     var spendForm = document.querySelector('#spend');
     spendForm.addEventListener('submit', function(ev){
         ev.preventDefault();
-        
-        
         var date = spendForm.querySelector('#spenddate').value,
         
             spendMessage = {

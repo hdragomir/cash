@@ -49,7 +49,7 @@ window.log = function(){
     
     cash.earn = function(config){
         config = this._prepare(config);
-        this.earnings.push(config);
+        this.earnings.unshift(config);
         this._updateBallance(config.amount);
         return this;
     };

@@ -211,9 +211,8 @@ td { vertical-align: top; }
    Author: Horia Dragomir <horia@hdragomir.com>
    ========================================================================== */
 
-body.fatty{ min-height: 500em; }
 
-body{-webkit-transition: all .5s .5s;}
+body{-webkit-transition: all .5s .5s; min-height: 50em;}
 
 header{
     width: 95%;
