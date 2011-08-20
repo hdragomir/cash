@@ -61,6 +61,17 @@ window.log = function(){
         return config;
     };
     
+    cash.month = function(key){
+        return {
+            spendings: this.spendings.filter(function(spent){
+                return spent.key === key;
+            }),
+            ins: this.ins.filter(function(earned){
+                return earned.key === key;
+            })
+        };
+    };
+    
     
 
     window.cash = cash;
