@@ -259,10 +259,13 @@ header{
     header nav{
         position: absolute;
         right: 0; top: 0;
+        font-size: 1.3em
     }
         header nav a{
             text-decoration: none;
             -webkit-appearance: button;
+            display: inline-block;
+            padding-left: .4em; padding-right: .4em;
         }
 
 /* ==|== non-semantic helper classes ========================================

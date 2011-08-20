@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     
     function writeCanvas(){
-        document.querySelector('h1').innerHTML = cash.ballance;
+        document.querySelector('h1').innerHTML = (cash.ballance+"").replace(/^(\d+)(\.\d{1,2})?.*?$/g, "$1$2");
         document.querySelector('#main').innerHTML = '';
         var months = cash.months(), month, ul;
         for(month in months){
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 ul.id = "for" + month;
                 document.querySelector('#main').appendChild(ul);
             }
+            monthData.spendings &&
             monthData.spendings.forEach(function(spent){
                 var li = document.createElement('li'),
                     date = cash.parseDate(spent.date);
@@ -42,23 +43,28 @@ document.addEventListener('DOMContentLoaded', function(){
     
     writeCanvas();
     
-    var spendForm = document.querySelector('#spend');
-    spendForm.addEventListener('submit', function(ev){
-        ev.preventDefault();
-        var date = spendForm.querySelector('[type=date]').value,
-            
-            spendMessage = {
-                amount: spendForm.querySelector('#spendamount').value,
-                comment: spendForm.querySelector('#spendcomment').value,
-                date: date? cash.parseDate(date) : null
-            };
-        cash.spend(spendMessage).save();
-        writeCanvas();
+    var d = cash.stringifyDate(new Date());
+    Array.prototype.map.call(document.querySelectorAll('header form'), function(form){
+        var dateInput = form.querySelector('input[type=date]');
+        dateInput && (dateInput.value = d);
         
-    }, false);
+        form.addEventListener('submit', function(ev){
+            ev.preventDefault();
+            if(ev.target.nodeName.toLowerCase() === 'form'){
+                var form = ev.target,
+                    date = form.querySelector('[type=date]').value;
+                    
+                cash[form.id]({
+                    "amount": form.querySelector('[name=amount]').value,
+                    "comment": form.querySelector('[name=comment]').value,
+                    "date": date? cash.parseDate(date) : null
+                }).save();
+                writeCanvas();
+            }
+        }, false);
+        
+    });
 
-    var d = new Date();
-    spendForm.querySelector('[type=date]').value = d.getFullYear() + '-' + cash.leadingZero(d.getMonth()+1) + '-' + d.getDate();
     
     
 }, false);

@@ -75,7 +75,8 @@ window.log = function(){
     cash._prepare = function(config){
         var now = config.date instanceof Date ? config.date : new Date();
         delete config.date;
-        config = extend({date: this.stringifyDate(now), amount: 0, comment: ""}, config);        
+        config = extend({date: this.stringifyDate(now), amount: 0, comment: ""}, config);
+        config.amount = parseFloat(config.amount, 10);
         config.key = now.getFullYear().toString() + leadingZero( now.getMonth() + 1 );
         return config;
     };
