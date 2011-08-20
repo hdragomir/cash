@@ -1,21 +1,30 @@
 
-(function(){
+(function(undefined){
     
     if(! /test/i.test(window.location.search)){
         return;
     }
+    window.testmode = true;
     var cash = Object.create(window.cash);
+    var phase = /phase2/.test(window.location.search) ? 2 : 1;
     cash.reset = function(){this.spendings = []; this.ins = []; this.ballance = 0;};
     
     var is = function(assert, onfailMessage){
-        if(assert)
+        if(assert === true)
             console.log('.');
-        else
+        else{
+            is.fail = true;
+            
             throw onfailMessage;
+        }
     };
     
-    var month = '201108';
+    document.addEventListener('DOMContentLoaded', function(){
+        document.body.style.background = is.fail? 'red' : 'green';
+    }, false);
     
+    var month = '201108';
+
     cash.ballance = 10;
     cash.spend({amount: 5});
     is(cash.ballance === 5, "Ballance not updating correctly");
@@ -73,5 +82,32 @@
     var months = cash.months
     is(months != undefined, "Months api not working");
     
+    cash.reset();
+    cash.add({amount: earned});
+    cash.spend({amount: spent});
+    
+    is("function" === typeof cash.save, "Cash has no save method");
+    cash.save();
+    is(cash.saveKey !== undefined, "Cash has no saveKey");
+    
+    is(localStorage[cash.saveKey] !== undefined, "Cash not really saving");
+    var loaded;
+    try{
+        loaded = JSON.parse(localStorage[cash.saveKey]);
+    } catch (e){
+        is(false, e);
+    }
+    
+    
+    is("object" === typeof loaded, "Cannot deserialize saved data");
+    is(parseInt(loaded.ballance, 10) === earned - spent, "Cash not saving ballance");
+    is(loaded.spendings !== undefined && loaded.spendings.length === 1, "Cash not saving spendings");
+    is(loaded.spendings[0].amount === spent, "Spendings not saved properly");
+    is(loaded.ins !== undefined && loaded.ins.length === 1, "Cash not saving ins");
+    
+    
+    is('function' === typeof cash.load, "Cash has no load function");
+    
+
     
 }());

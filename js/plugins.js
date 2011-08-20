@@ -109,6 +109,23 @@ window.log = function(){
         return combined;
     };
     
+    cash.toString = function(){
+        return "Cash";
+    };
+    
+    cash.save = function(){
+        this.saveKey = this.saveKey || 'cash_data';
+        
+        localStorage[this.saveKey] = JSON.stringify({ballance: this.ballance,
+                                                    spendings: this.spendings,
+                                                    ins: this.ins});
+        return this;
+    };
+    
+    cash.load = function(){
+          
+    };
+    
     cash.leadingZero = leadingZero;
     
     

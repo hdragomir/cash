@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', function(){
     
-    if(! cash)
+    if(window.testmode || ! cash)
         return;
     
     cash.ballance = 500;
