@@ -6,8 +6,6 @@
     }
     window.testmode = true;
     var cash = Object.create(window.cash);
-    var phase = /phase2/.test(window.location.search) ? 2 : 1;
-    cash.reset = function(){this.spendings = []; this.earnings = []; this.ballance = 0;};
     cash.saveKey = 'test_run';
     
     var is = function(assert, onfailMessage){

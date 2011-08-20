@@ -212,15 +212,18 @@ td { vertical-align: top; }
    ========================================================================== */
 
 
-body{-webkit-transition: all .5s .5s; min-height: 50em;}
+body{-webkit-transition: all .5s .5s; }
 
 header{
     width: 95%;
     margin: 0 2.5%;
+    position: relative;
 }
     header h1{
         margin: 0 0 1em 0;
     }
+        header form{display: none;}
+        header form:target{display: block}
     
         form input{
             border-radius: .3em;
@@ -251,6 +254,15 @@ header{
             margin: 1em auto;
             font-size: 1.7em;
             
+        }
+        
+    header nav{
+        position: absolute;
+        right: 0; top: 0;
+    }
+        header nav a{
+            text-decoration: none;
+            -webkit-appearance: button;
         }
 
 /* ==|== non-semantic helper classes ========================================

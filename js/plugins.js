@@ -34,9 +34,27 @@ window.log = function(){
     cash.ballance = 0;
     cash.spendings = [];
     cash.earnings = [];
+    
+    cash.stringifyDate = function(d){
+        if(d instanceof Date){
+            return d.getFullYear() + '-' + this.leadingZero(d.getMonth()+1) + '-' + d.getDate();
+        }
+        return null;
+    };
+    //http://stackoverflow.com/questions/3085937/safari-js-cannot-parse-yyyy-mm-dd-date-format/3085993#3085993
+    cash.parseDate = function (input, format) {
+        format = format || 'yyyy-mm-dd'; // default format
+        var parts = input.match(/(\d+)/g), 
+            i = 0, fmt = {};
+        // extract date-part indexes from the format
+        format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });  
+        return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
+    }
 
+    cash.reset = function(){this.spendings = []; this.earnings = []; this.ballance = 0; return this};
+    
     cash.spend = function(config){
-        config = this._prepare(config); 
+        config = this._prepare(config);
         this.spendings.unshift(config);
         this._updateBallance(-config.amount);
         return this;
@@ -56,7 +74,8 @@ window.log = function(){
     
     cash._prepare = function(config){
         var now = config.date instanceof Date ? config.date : new Date();
-        config = extend({date: now.getTime(), amount: 0, comment: ""}, config);
+        delete config.date;
+        config = extend({date: this.stringifyDate(now), amount: 0, comment: ""}, config);        
         config.key = now.getFullYear().toString() + leadingZero( now.getMonth() + 1 );
         return config;
     };
