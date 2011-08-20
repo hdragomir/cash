@@ -1,5 +1,5 @@
 
-// usage: log('inside coolFunc', this, arguments);
+// usage: log('earningside coolFunc', this, arguments);
 // paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
 window.log = function(){
   log.history = log.history || [];   // store logs to an array for reference
@@ -16,7 +16,7 @@ window.log = function(){
 {console.log();return window.console;}catch(err){return window.console={};}})());
 
 
-// place any jQuery/helper plugins in here, instead of separate, slower script files.
+// place any jQuery/helper plugearnings in here, earningstead of separate, slower script files.
 
 (function(window, document, undefined){
 
@@ -33,7 +33,7 @@ window.log = function(){
     
     cash.ballance = 0;
     cash.spendings = [];
-    cash.ins = [];
+    cash.earnings = [];
 
     cash.spend = function(config){
         config = this._prepare(config); 
@@ -47,9 +47,9 @@ window.log = function(){
         return this;
     }
     
-    cash.add = function(config){
+    cash.earn = function(config){
         config = this._prepare(config);
-        this.ins.push(config);
+        this.earnings.push(config);
         this._updateBallance(config.amount);
         return this;
     };
@@ -66,14 +66,14 @@ window.log = function(){
             spendings: this.spendings.filter(function(spent){
                 return spent.key === key;
             }),
-            ins: this.ins.filter(function(earned){
+            earnings: this.earnings.filter(function(earned){
                 return earned.key === key;
             })
         };
         month.spent = month.spendings.reduce(function(prev, spent){
             return prev + spent.amount;
         }, 0);
-        month.earned = month.ins.reduce(function(prev, earned){
+        month.earned = month.earnings.reduce(function(prev, earned){
             return prev + earned.amount;
         }, 0);
         month.ballance = month.earned - month.spent;
@@ -90,7 +90,7 @@ window.log = function(){
                 return prev;
             },
             spending = this.spendings.reduce(reducingFunction, {}),
-            earnings = this.ins.reduce(reducingFunction, {}),
+            earnings = this.earnings.reduce(reducingFunction, {}),
             combined = {};
         Object.keys(spending).forEach(function(month){
             combined[month] = {"spendings": spending[month]};
@@ -112,11 +112,19 @@ window.log = function(){
         
         localStorage[this.saveKey] = JSON.stringify({ballance: this.ballance,
                                                     spendings: this.spendings,
-                                                    ins: this.ins});
+                                                    earnings: this.earnings});
         return this;
     };
     
     cash.load = function(){
+        this.saveKey = this.saveKey || 'cash_data';
+        try{
+            var loaded = JSON.parse(localStorage[this.saveKey])
+            this.ballance = parseInt(loaded.ballance, 10);
+            this.spendings = loaded.spendings;
+            this.earnings = loaded.earnings;
+        } catch (e){};
+        
         return this;  
     };
     
