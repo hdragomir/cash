@@ -37,7 +37,7 @@ window.log = function(){
 
     cash.spend = function(config){
         config = this._prepare(config); 
-        this.spendings.push(config);
+        this.spendings.unshift(config);
         this._updateBallance(-config.amount);
         return this;
     };
