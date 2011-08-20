@@ -99,7 +99,7 @@ window.log = function(){
             }, {}),
             combined = {};
         Object.keys(spending).forEach(function(month){
-            combined[month] = {"spenings": spending[month]};
+            combined[month] = {"spendings": spending[month]};
         });
         Object.keys(earnings).forEach(function(month){
             combined[month]||(combined[month] = {});

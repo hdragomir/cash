@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', function(){
             ul.id = "for" + month;
             document.querySelector('#main').appendChild(ul);
         }
-        
+        monthData.spendings.forEach(function(spent){
+            var li = document.createElement('li'),
+                date = new Date(spent.date);
+            
+            li.innerHTML = ' <time datetime="' + date.toLocaleString() + '">' + date.toDateString() + '</time> <b>' + spent.amount + '</b> € <span>( ' + spent.comment + ' )</span>';
+            ul.appendChild(li);
+        });
     }
     
     
