@@ -2,14 +2,19 @@
 
 */
 
+window.addEventListener('load', function(){
+    document.body.style.minHeight = screen.height + 'px';
+    setTimeout(scrollTo, 0,0, 1);
+}, false);
+
 document.addEventListener('DOMContentLoaded', function(){
     
     if(window.testmode || ! cash)
         return;
     cash.load();
     
-    document.querySelector('h1').innerHTML = cash.ballance;
     function writeCanvas(){
+        document.querySelector('h1').innerHTML = cash.ballance;
         document.querySelector('#main').innerHTML = '';
         var months = cash.months(), month, ul;
         for(month in months){
